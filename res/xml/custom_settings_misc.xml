@@ -40,6 +40,13 @@
         android:defaultValue="false"
         settings:position="none"/>
 
+    <com.android.settings.preferences.GlobalSettingSwitchPreference
+        android:key="hide_screen_capture_status"
+        android:title="@string/hide_screen_capture_status_title"
+        android:summary="@string/hide_screen_capture_status_summary"
+        android:defaultValue="false"
+        settings:position="none"/>
+
     <Preference
         android:key="freeform"
         android:title="@string/freeform_title"
