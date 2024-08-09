@@ -47,6 +47,12 @@
         android:defaultValue="false"
         settings:position="none"/>
 
+    <com.android.settings.preferences.SystemSettingSwitchPreference
+        android:key="no_storage_restrict"
+        android:title="@string/no_storage_restrict_title"
+        android:summary="@string/no_storage_restrict_summary"
+        android:defaultValue="false"/>
+
     <Preference
         android:key="freeform"
         android:title="@string/freeform_title"
