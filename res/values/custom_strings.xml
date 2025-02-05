@@ -35,6 +35,8 @@
     <string name="hide_ime_space_style_2">No Space (Hide keyboard buttons)</string>
 
     <!-- Freeform launch mode -->
+    <string name="freeform_title">Multi-Window</string>
+    <string name="freeform_summary">Configure multi-window aka FreeForm options</string>
     <string name="freeform_launch_mode_title">Freeform launch mode</string>
     <string name="freeform_launch_mode_1">Native AOSP</string>
     <string name="freeform_launch_mode_2">LMOFreeForm</string>
@@ -1143,6 +1145,8 @@
     <string name="pulse_custom_div">Bar spacing</string>
     <string name="pulse_filled_block_size">Block size</string>
     <string name="pulse_empty_block_size">Block spacing</string>
+    <string name="visualizer_title">Visualizer</string>
+    <string name="visualizer_summary">Configure visualizer options</string>
 
     <!-- Navigation Bar -->
     <string name="navbar_visibility_title">Navigation bar</string>

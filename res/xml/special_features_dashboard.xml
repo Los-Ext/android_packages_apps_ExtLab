@@ -17,11 +17,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/custom_settings_title" >
 
-        <Preference
-            android:key="gestures"
-            android:icon="@drawable/ic_settings_gestures"
-            android:title="@string/gestures_title"
-            android:summary="@string/gestures_title_summary"
-            android:fragment="com.custom.settings.fragments.Gestures" />
+    <Preference
+        android:key="colors"
+        android:icon="@drawable/ic_color_bucket"
+        android:title="@string/monet_title"
+        android:summary="@string/monet_summary"
+        android:fragment="com.custom.settings.fragments.MonetSettings" />
+
+    <Preference
+        android:key="edge_light"
+        android:icon="@drawable/ic_shapes"
+        android:title="@string/edge_light_title"
+        android:summary="@string/edge_light_summary"
+        android:fragment="com.custom.settings.fragments.EdgeLightSettings" />
+
+    <Preference
+        android:key="freeform"
+        android:icon="@drawable/select_window_24px"
+        android:title="@string/freeform_title"
+        android:summary="@string/freeform_summary"
+        android:fragment="com.custom.settings.fragments.Freeform" />
+
+    <Preference
+        android:key="gestures"
+        android:icon="@drawable/ic_settings_gestures"
+        android:title="@string/gestures_title"
+        android:summary="@string/gestures_title_summary"
+        android:fragment="com.custom.settings.fragments.Gestures" />
+
+    <Preference
+        android:key="visualizer"
+        android:icon="@drawable/ic_pulse"
+        android:title="@string/visualizer_title"
+        android:summary="@string/visualizer_summary"
+        android:fragment="com.custom.settings.fragments.PulseSettings" />
 
 </PreferenceScreen> 
