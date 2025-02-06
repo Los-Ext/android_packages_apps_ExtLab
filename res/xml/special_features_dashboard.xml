@@ -46,6 +46,13 @@
         android:fragment="com.custom.settings.fragments.Gestures" />
 
     <Preference
+        android:key="keyboard"
+        android:icon="@drawable/ic_buttons"
+        android:title="@string/keyboard_space_title"
+        android:summary="@string/keyboard_space_summary"
+        android:fragment="com.custom.settings.fragments.Keyboard" />
+
+    <Preference
         android:key="visualizer"
         android:icon="@drawable/ic_pulse"
         android:title="@string/visualizer_title"

@@ -30,6 +30,8 @@
     <string name="power_button_brightness_boost">Brightness Boost</string>
 
     <!-- Hide NavBar space -->
+    <string name="keyboard_space_title">Hide NavBar space</string>
+    <string name="keyboard_space_summary">Hide buttons/space below keyboard</string>
     <string name="hide_ime_space_style_title">Hide NavBar space style</string>
     <string name="hide_ime_space_style_1">Narrow space</string>
     <string name="hide_ime_space_style_2">No Space (Hide keyboard buttons)</string>
