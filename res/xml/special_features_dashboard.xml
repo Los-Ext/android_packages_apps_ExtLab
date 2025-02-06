@@ -33,7 +33,7 @@
 
     <Preference
         android:key="freeform"
-        android:icon="@drawable/select_window_24px"
+        android:icon="@drawable/ic_settings_popup_view"
         android:title="@string/freeform_title"
         android:summary="@string/freeform_summary"
         android:fragment="com.custom.settings.fragments.Freeform" />
@@ -41,6 +41,7 @@
     <!-- Gaming mode -->
     <Preference
         android:key="gaming_mode"
+        android:icon="@drawable/ic_settings_game_mode"
         android:title="@string/gaming_mode_title"
         android:summary="@string/gaming_mode_summary"
          >

@@ -21,9 +21,25 @@
     android:title="@string/gestures_title">
 
 
+    <com.android.settings.preferences.ui.AdaptivePreference
+        android:key="power_button_double_press"
+        android:title="@string/power_double_press_title"
+        android:summary="@string/power_double_press_summary"
+        android:fragment="com.custom.settings.fragments.DoubleTapPowerFragment"
+        app:position="top" />
+
+    <!-- Pocket Mode -->
+    <com.android.settings.preferences.SecureSettingSwitchPreference
+        android:key="pocket_mode_enabled"
+        android:title="@string/pocket_judge_title"
+        android:summary="@string/pocket_judge_summary"
+        android:defaultValue="false"
+        app:position="bottom"
+        />
+
     <PreferenceCategory
         android:key="shake_gestures"
-        android:title="@string/gestures_title">
+        android:title="@string/shake_gestures_enabled_title">
 
         <com.android.settings.preferences.SystemSettingSwitchPreference
             android:key="shake_gestures_enabled"
@@ -55,21 +71,5 @@
             app:position="bottom" />
 
     </PreferenceCategory>
-
-    <com.android.settings.preferences.ui.AdaptivePreference
-        android:key="power_button_double_press"
-        android:title="@string/power_double_press_title"
-        android:summary="@string/power_double_press_summary"
-        android:fragment="com.custom.settings.fragments.DoubleTapPowerFragment"
-        app:position="top" />
-
-    <!-- Pocket Mode -->
-    <com.android.settings.preferences.SecureSettingSwitchPreference
-        android:key="pocket_mode_enabled"
-        android:title="@string/pocket_judge_title"
-        android:summary="@string/pocket_judge_summary"
-        android:defaultValue="false"
-        app:position="bottom"
-        />
 
 </PreferenceScreen>
