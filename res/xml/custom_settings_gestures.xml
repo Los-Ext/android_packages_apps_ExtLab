@@ -34,8 +34,18 @@
         android:title="@string/pocket_judge_title"
         android:summary="@string/pocket_judge_summary"
         android:defaultValue="false"
-        app:position="bottom"
         />
+
+    <com.android.settings.preferences.SystemSettingListPreference
+        android:key="key_three_fingers_swipe_action"
+        android:title="@string/three_finger_gesture_action_title"
+        android:summary="%s"
+        android:dialogTitle="@string/three_finger_gesture_action_dialog_title"
+        android:entries="@array/hardware_keys_action_entries"
+        android:entryValues="@array/hardware_keys_action_values"
+        android:defaultValue="0"
+        app:isLineageSettings="true"
+        app:position="bottom" />
 
     <PreferenceCategory
         android:key="shake_gestures"
