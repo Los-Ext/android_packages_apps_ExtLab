@@ -35,6 +35,7 @@
     <string name="hide_ime_space_style_title">Hide NavBar space style</string>
     <string name="hide_ime_space_style_1">Narrow space</string>
     <string name="hide_ime_space_style_2">No Space (Hide keyboard buttons)</string>
+    <string name="hide_ime_space_style_3">Hide navigation pill and space</string>
 
     <!-- Freeform launch mode -->
     <string name="freeform_title">Multi-Window</string>

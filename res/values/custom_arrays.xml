@@ -44,12 +44,14 @@
         <item>@string/color_default</item>
         <item>@string/hide_ime_space_style_1</item>
         <item>@string/hide_ime_space_style_2</item>
+        <item>@string/hide_ime_space_style_3</item>
     </string-array>
 
     <string-array name="hide_ime_space_style_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- Freeform mode  -->
