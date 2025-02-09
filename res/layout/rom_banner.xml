@@ -123,6 +123,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginTop="3dp"
                         android:scaleType="fitXY"
+                        android:translationY="15dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/about_phone_storage_animation"/>
