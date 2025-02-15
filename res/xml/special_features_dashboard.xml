@@ -66,6 +66,13 @@
         android:fragment="com.custom.settings.fragments.Keyboard" />
 
     <Preference
+        android:key="spoofing"
+        android:icon="@drawable/ic_key"
+        android:title="@string/spoofing_title"
+        android:summary="@string/spoofing_title_summary"
+        android:fragment="com.custom.settings.fragments.Spoof" />
+
+    <Preference
         android:key="visualizer"
         android:icon="@drawable/ic_pulse"
         android:title="@string/visualizer_title"
