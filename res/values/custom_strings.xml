@@ -316,7 +316,7 @@
 
     <!-- Power Mode tile -->
     <string name="power_mode_tile_label">Power Mode</string>
-    <string name="power_mode_default">Default</string>
+    <string name="power_mode_default">Balanced</string>
     <string name="power_mode_conservative">Conservative</string>
     <string name="power_mode_powersave">Powersave</string>
     <string name="power_mode_performance">Performance</string>
@@ -352,7 +352,8 @@
     <string name="no_storage_restrict_summary">Remove the restriction when selecting folders through Storage Access Framework.</string>
 
     <!-- Power Modes -->
-    <string name="device_power_mode">Power Mode</string>
+    <string name="performance_mode_title">Performance Mode</string>
+    <string name="performance_mode_summary">Boost system performance. Increases battery usage.</string>
 
     <!-- Per-app spoofing -->
     <string name="gameprops_title">Enable Per-app spoofing</string>
