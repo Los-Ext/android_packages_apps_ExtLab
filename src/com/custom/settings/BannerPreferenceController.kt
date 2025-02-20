@@ -91,6 +91,7 @@ class BannerPreferenceController(context: Context) : AbstractPreferenceControlle
 
     private fun getMaintainerName(): String {
         return android.os.SystemProperties.get("persist.sys.axion_maintainer", "Unknown")
+            .replace("_", " ")
     }
 
     private fun getDeviceName(): String {
