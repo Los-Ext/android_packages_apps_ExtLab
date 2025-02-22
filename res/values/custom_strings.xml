@@ -2209,4 +2209,5 @@
     <string name="toast_app_spoofing_success_add">Added %1$s to spoof list.</string>
     <string name="toast_app_spoofing_success_remove">Removed %1$s from spoof list.</string>
     <string name="toast_app_spoofing_default_package">Default package cannot be deselected.</string>
+
 </resources>
