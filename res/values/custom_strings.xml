@@ -16,6 +16,10 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Battery Health -->
+    <string name="battery_health_title">Smart Charging</string>
+    <string name="battery_health_summary">Limit charging to 80% to extend battery lifespan</string>
+
     <!-- Special Features Dashboard -->
     <string name="custom_settings_title">Special Features</string>
     <string name="custom_settings_summary">Change icons, themes, and more</string>
