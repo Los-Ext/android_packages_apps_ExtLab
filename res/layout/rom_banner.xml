@@ -91,7 +91,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
