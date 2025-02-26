@@ -30,6 +30,7 @@
 
     <Preference
         android:key="hide_applist_setting"
+        android:icon="@drawable/ic_key"
         android:title="@string/hide_applist_title"
         android:summary="@string/hide_applist_summary"
         android:fragment="com.custom.settings.fragments.HideAppListSettings" />
@@ -51,7 +52,7 @@
 
     <Preference
         android:key="spoofing"
-        android:icon="@drawable/ic_key"
+        android:icon="@drawable/ic_cog"
         android:title="@string/spoofing_title"
         android:summary="@string/spoofing_title_summary"
         android:fragment="com.custom.settings.fragments.Spoof" />
