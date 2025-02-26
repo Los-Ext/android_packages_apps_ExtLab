@@ -28,6 +28,12 @@
         android:fragment="com.custom.settings.fragments.HideDeveloperStatusSettings"
         settings:controller="com.custom.settings.fragments.HideDeveloperStatusPreferenceController" />
 
+    <Preference
+        android:key="hide_applist_setting"
+        android:title="@string/hide_applist_title"
+        android:summary="@string/hide_applist_summary"
+        android:fragment="com.custom.settings.fragments.HideAppListSettings" />
+
     <com.android.settings.preferences.GlobalSettingSwitchPreference
         android:key="window_ignore_secure"
         android:icon="@drawable/ic_custom_settings_privacy"
