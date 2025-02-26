@@ -17,27 +17,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/custom_settings_title" >
 
-    <Preference
-        android:key="colors"
-        android:icon="@drawable/ic_color_bucket"
-        android:title="@string/monet_title"
-        android:summary="@string/monet_summary"
-        android:fragment="com.custom.settings.fragments.MonetSettings" />
-
-    <Preference
-        android:key="edge_light"
-        android:icon="@drawable/ic_shapes"
-        android:title="@string/edge_light_title"
-        android:summary="@string/edge_light_summary"
-        android:fragment="com.custom.settings.fragments.EdgeLightSettings" />
-
-    <Preference
-        android:key="freeform"
-        android:icon="@drawable/ic_settings_popup_view"
-        android:title="@string/freeform_title"
-        android:summary="@string/freeform_summary"
-        android:fragment="com.custom.settings.fragments.Freeform" />
-
     <!-- Gaming mode -->
     <Preference
         android:key="gaming_mode"
@@ -52,39 +31,25 @@
     </Preference>
 
     <Preference
-        android:key="gestures"
-        android:icon="@drawable/ic_settings_gestures"
-        android:title="@string/gestures_title"
-        android:summary="@string/gestures_title_summary"
-        android:fragment="com.custom.settings.fragments.Gestures" />
+        android:key="misc"
+        android:icon="@drawable/ic_settings_miscs"
+        android:title="@string/misc_title"
+        android:summary="@string/misc_settings_summary"
+        android:fragment="com.custom.settings.fragments.Misc" />
 
     <Preference
-        android:key="keyboard"
-        android:icon="@drawable/ic_buttons"
-        android:title="@string/keyboard_space_title"
-        android:summary="@string/keyboard_space_summary"
-        android:fragment="com.custom.settings.fragments.Keyboard" />
+        android:key="colors"
+        android:icon="@drawable/ic_color_bucket"
+        android:title="@string/monet_title"
+        android:summary="@string/monet_summary"
+        android:fragment="com.custom.settings.fragments.MonetSettings" />
 
     <Preference
-        android:key="spoofing"
-        android:icon="@drawable/ic_key"
-        android:title="@string/spoofing_title"
-        android:summary="@string/spoofing_title_summary"
-        android:fragment="com.custom.settings.fragments.Spoof" />
+        android:key="system"
+        android:icon="@drawable/ic_custom_settings_system_dashboard_white"
+        android:summary="@string/system_settings_summary"
+        android:title="@string/header_category_system"
+        android:fragment="com.custom.settings.fragments.System" />
 
-    <Preference
-        android:key="visualizer"
-        android:icon="@drawable/ic_pulse"
-        android:title="@string/visualizer_title"
-        android:summary="@string/visualizer_summary"
-        android:fragment="com.custom.settings.fragments.PulseSettings" />
-
-    <Preference
-        android:key="hide_developer_status_settings"
-        android:icon="@drawable/ic_hide"
-        android:title="@string/hide_developer_status_title"
-        android:summary="@string/hide_developer_status_summary"
-        android:fragment="com.custom.settings.fragments.HideDeveloperStatusSettings"
-        settings:controller="com.custom.settings.fragments.HideDeveloperStatusPreferenceController" />
 
 </PreferenceScreen> 
