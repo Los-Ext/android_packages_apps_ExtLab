@@ -16,6 +16,12 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Smart Charge Tile Strings -->
+    <string name="qs_tile_smart_charge">Smart Charge</string>
+    <string name="qs_tile_smart_charge_desc">Limits battery charge to extend lifespan</string>
+    <string name="qs_tile_smart_charge_enabled">Smart Charge active</string>
+    <string name="qs_tile_smart_charge_disabled">Smart Charge inactive</string>
+
     <!-- Force LTE_CA -->
     <string name="force_lte_ca">Force LTE CA</string>
     <string name="force_lte_ca_summary">Force LTE carrier aggregation to work</string>
