@@ -58,6 +58,13 @@
             android:key="persist.sys.gameprops.enable"
             android:title="@string/use_games_spoof_title"
             android:summary="@string/use_games_spoof_summary"
+            android:defaultValue="false" />
+            
+        <!-- Netflix spoof -->
+        <com.android.settings.preferences.SystemPropertySwitchPreference
+            android:key="persist.sys.pixelprops.netflix"
+            android:title="@string/netflix_spoof_title"
+            android:summary="@string/netflix_spoof_summary"
             android:defaultValue="false"
             app:position="bottom"/>
 
