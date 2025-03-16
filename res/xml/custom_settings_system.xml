@@ -27,11 +27,4 @@
         android:summary="@string/gestures_title_summary"
         android:fragment="com.custom.settings.fragments.Gestures" />
 
-    <Preference
-        android:key="keyboard"
-        android:icon="@drawable/ic_buttons"
-        android:title="@string/keyboard_space_title"
-        android:summary="@string/keyboard_space_summary"
-        android:fragment="com.custom.settings.fragments.Keyboard" />
-
 </PreferenceScreen>
