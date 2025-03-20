@@ -16,6 +16,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Navigation Bar -->
+    <string name="navigation_bar_enable_taskbar_title">Enable taskbar</string>
+
     <!-- Smart Charge Tile Strings -->
     <string name="qs_tile_smart_charge">Smart Charge</string>
     <string name="qs_tile_smart_charge_desc">Limits battery charge to extend lifespan</string>
