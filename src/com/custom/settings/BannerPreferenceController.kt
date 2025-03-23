@@ -23,107 +23,105 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceScreen
+import com.airbnb.lottie.LottieAnimationView
 import com.android.settings.R
-import com.android.settingslib.core.AbstractPreferenceController
-import com.android.settingslib.widget.LayoutPreference
 import com.android.settings.utils.DeviceInfoUtil
 import com.android.settings.utils.LottieAnimationUtils
-import com.airbnb.lottie.LottieAnimationView
-
+import com.android.settingslib.core.AbstractPreferenceController
 import com.android.settingslib.deviceinfo.PrivateStorageInfo
 import com.android.settingslib.deviceinfo.StorageManagerVolumeProvider
+import com.android.settingslib.widget.LayoutPreference
 
 class BannerPreferenceController(context: Context) : AbstractPreferenceController(context) {
 
-    override fun displayPreference(screen: PreferenceScreen) {
-        super.displayPreference(screen)
-        val bannerPreference = screen.findPreference<LayoutPreference>(KEY_ROM_BANNER) ?: return
+  override fun displayPreference(screen: PreferenceScreen) {
+    super.displayPreference(screen)
+    val bannerPreference = screen.findPreference<LayoutPreference>(KEY_ROM_BANNER) ?: return
 
-        val deviceNameText = bannerPreference.findViewById<TextView>(R.id.device_name)
-        deviceNameText?.text = getDeviceName()
+    val deviceNameText = bannerPreference.findViewById<TextView>(R.id.device_name)
+    deviceNameText?.text = getDeviceName()
 
-        bannerPreference.findViewById<TextView>(R.id.banner_text)?.text =
-            "AxionOS v${getOSVersion()}"
+    bannerPreference.findViewById<TextView>(R.id.banner_text)?.text = "AxionOS v${getOSVersion()}"
 
-        bannerPreference.findViewById<TextView>(R.id.storage_info)?.text =
-            "${DeviceInfoUtil.getStorageUsed(mContext)} / ${DeviceInfoUtil.getStorageTotal(mContext)}"
-        bannerPreference.findViewById<TextView>(R.id.maintainer_info)?.text = getMaintainerName()
-        bannerPreference.findViewById<TextView>(R.id.processor_info)?.text =
-            DeviceInfoUtil.getProcessor()
-        bannerPreference.findViewById<TextView>(R.id.ram_info)?.text =
-            DeviceInfoUtil.getTotalRam()
-        bannerPreference.findViewById<TextView>(R.id.camera_info)?.text =
-            "${DeviceInfoUtil.getFrontCameraMegapixels(mContext)} / ${DeviceInfoUtil.getRearCameraMegapixels(mContext)}"
-        bannerPreference.findViewById<TextView>(R.id.display_info)?.text =
-            DeviceInfoUtil.getScreenResolution(mContext)
-        bannerPreference.findViewById<TextView>(R.id.battery_info)?.text =
-            DeviceInfoUtil.getBatteryCapacity(mContext)
+    bannerPreference.findViewById<TextView>(R.id.storage_info)?.text =
+      "${DeviceInfoUtil.getStorageUsed(mContext)} / ${DeviceInfoUtil.getStorageTotal(mContext)}"
+    bannerPreference.findViewById<TextView>(R.id.maintainer_info)?.text = getMaintainerName()
+    bannerPreference.findViewById<TextView>(R.id.processor_info)?.text =
+      DeviceInfoUtil.getProcessor()
+    bannerPreference.findViewById<TextView>(R.id.ram_info)?.text = DeviceInfoUtil.getTotalRam()
+    bannerPreference.findViewById<TextView>(R.id.camera_info)?.text =
+      "${DeviceInfoUtil.getFrontCameraMegapixels(mContext)} / ${DeviceInfoUtil.getRearCameraMegapixels(mContext)}"
+    bannerPreference.findViewById<TextView>(R.id.display_info)?.text =
+      DeviceInfoUtil.getScreenResolution(mContext)
+    bannerPreference.findViewById<TextView>(R.id.battery_info)?.text =
+      DeviceInfoUtil.getBatteryCapacity(mContext)
 
-        val waveView: LottieAnimationView = bannerPreference.findViewById(R.id.wave_view)
-        LottieAnimationUtils.applyAnimationColor(mContext, waveView)
+    val waveView: LottieAnimationView = bannerPreference.findViewById(R.id.wave_view)
+    LottieAnimationUtils.applyAnimationColor(mContext, waveView)
 
-        val storageManager = mContext.getSystemService(StorageManager::class.java)
-        val volumeProvider = StorageManagerVolumeProvider(storageManager)
-        val info = PrivateStorageInfo.getPrivateStorageInfo(volumeProvider)
-        val totalBytes = info.totalBytes
-        val usedBytes = totalBytes - info.freeBytes
+    val storageManager = mContext.getSystemService(StorageManager::class.java)
+    val volumeProvider = StorageManagerVolumeProvider(storageManager)
+    val info = PrivateStorageInfo.getPrivateStorageInfo(volumeProvider)
+    val totalBytes = info.totalBytes
+    val usedBytes = totalBytes - info.freeBytes
 
-        if (totalBytes > 0) {
-            val storagePercentage = (usedBytes.toDouble() / totalBytes.toDouble()) * 100
-            updateWaveTranslation(waveView, storagePercentage)
+    if (totalBytes > 0) {
+      val storagePercentage = (usedBytes.toDouble() / totalBytes.toDouble()) * 100
+      updateWaveTranslation(waveView, storagePercentage)
+    }
+
+    bannerPreference.findViewById<android.view.View>(R.id.device_name_card)?.setOnClickListener {
+      showEditDeviceNameDialog(deviceNameText)
+    }
+  }
+
+  private fun updateWaveTranslation(waveView: LottieAnimationView, storagePercentage: Double) {
+    val maxTranslationYDp = 26f
+    val translationYDp = (maxTranslationYDp * (1 - (storagePercentage / 100f))).toFloat()
+    val density = mContext.resources.displayMetrics.density
+    waveView.translationY = translationYDp * density
+  }
+
+  private fun getOSVersion(): String {
+    return android.os.SystemProperties.get("ro.lineage.build.version", "1.0")
+  }
+
+  private fun getMaintainerName(): String {
+    return android.os.SystemProperties.get("persist.sys.axion_maintainer", "Unknown")
+      .replace("_", " ")
+  }
+
+  private fun getDeviceName(): String {
+    return Settings.Global.getString(mContext.contentResolver, Settings.Global.DEVICE_NAME)
+      ?: android.os.Build.MODEL
+  }
+
+  private fun showEditDeviceNameDialog(deviceNameText: TextView?) {
+    val editText =
+      EditText(mContext).apply {
+        inputType = InputType.TYPE_CLASS_TEXT
+        setText(getDeviceName())
+      }
+
+    AlertDialog.Builder(mContext)
+      .setTitle(R.string.edit_device_name_title)
+      .setView(editText)
+      .setPositiveButton(R.string.ok) { _, _ ->
+        val newName = editText.text.toString().trim()
+        if (newName.isNotEmpty()) {
+          Settings.Global.putString(mContext.contentResolver, Settings.Global.DEVICE_NAME, newName)
+          deviceNameText?.text = newName
         }
+      }
+      .setNegativeButton(android.R.string.cancel, null)
+      .show()
+  }
 
-        bannerPreference.findViewById<android.view.View>(R.id.device_name_card)?.setOnClickListener {
-            showEditDeviceNameDialog(deviceNameText)
-        }
-    }
+  override fun isAvailable(): Boolean = true
 
-    private fun updateWaveTranslation(waveView: LottieAnimationView, storagePercentage: Double) {
-        val maxTranslationYDp = 26f 
-        val translationYDp = (maxTranslationYDp * (1 - (storagePercentage / 100f))).toFloat()
-        val density = mContext.resources.displayMetrics.density
-        waveView.translationY = translationYDp * density
-    }
+  override fun getPreferenceKey(): String = KEY_ROM_BANNER
 
-    private fun getOSVersion(): String {
-        return android.os.SystemProperties.get("ro.lineage.build.version", "1.0")
-    }
-
-    private fun getMaintainerName(): String {
-        return android.os.SystemProperties.get("persist.sys.axion_maintainer", "Unknown")
-            .replace("_", " ")
-    }
-
-    private fun getDeviceName(): String {
-        return Settings.Global.getString(mContext.contentResolver, Settings.Global.DEVICE_NAME)
-            ?: android.os.Build.MODEL
-    }
-
-    private fun showEditDeviceNameDialog(deviceNameText: TextView?) {
-        val editText = EditText(mContext).apply {
-            inputType = InputType.TYPE_CLASS_TEXT
-            setText(getDeviceName())
-        }
-
-        AlertDialog.Builder(mContext)
-            .setTitle(R.string.edit_device_name_title)
-            .setView(editText)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                val newName = editText.text.toString().trim()
-                if (newName.isNotEmpty()) {
-                    Settings.Global.putString(mContext.contentResolver, Settings.Global.DEVICE_NAME, newName)
-                    deviceNameText?.text = newName
-                }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-    }
-
-    override fun isAvailable(): Boolean = true
-
-    override fun getPreferenceKey(): String = KEY_ROM_BANNER
-
-    companion object {
-        private const val KEY_ROM_BANNER = "rom_banner"
-    }
+  companion object {
+    private const val KEY_ROM_BANNER = "rom_banner"
+  }
 }

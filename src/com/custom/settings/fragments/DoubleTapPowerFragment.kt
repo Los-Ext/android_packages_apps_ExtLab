@@ -17,73 +17,90 @@ package com.custom.settings.fragments
 
 import android.os.Bundle
 import android.provider.Settings
-
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-
 import com.android.settings.R
-
 import com.android.settings.utils.PackagePickerDialogFragment
 
 class DoubleTapPowerFragment : PreferenceFragmentCompat() {
 
-    private lateinit var doublePressActionPref: Preference
-    private lateinit var doublePressActionCustomAppPref: Preference
+  private lateinit var doublePressActionPref: Preference
+  private lateinit var doublePressActionCustomAppPref: Preference
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.custom_settings_double_tap_power, rootKey)        
-        activity?.title = getString(R.string.power_double_press_title)
-        doublePressActionPref = findPreference("power_button_action_double_press")!!
-        doublePressActionCustomAppPref = findPreference("power_button_action_double_press_custom_app_pkg")!!
-        updatePreferenceStates()
-        doublePressActionPref.setOnPreferenceChangeListener { _, newValue ->
-            handleShortcutChange(newValue as String)
-            true
-        }
-        doublePressActionCustomAppPref.setOnPreferenceClickListener {
-            showPackagePickerDialog()
-            true
-        }
+  override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    setPreferencesFromResource(R.xml.custom_settings_double_tap_power, rootKey)
+    activity?.title = getString(R.string.power_double_press_title)
+    doublePressActionPref = findPreference("power_button_action_double_press")!!
+    doublePressActionCustomAppPref =
+      findPreference("power_button_action_double_press_custom_app_pkg")!!
+    updatePreferenceStates()
+    doublePressActionPref.setOnPreferenceChangeListener { _, newValue ->
+      handleShortcutChange(newValue as String)
+      true
     }
-
-    private fun handleShortcutChange(newValue: String) {
-       doublePressActionCustomAppPref.isEnabled = newValue == "custom_app"
-        if (newValue != "custom_app") {
-            clearCustomAppPreference()
-        }
+    doublePressActionCustomAppPref.setOnPreferenceClickListener {
+      showPackagePickerDialog()
+      true
     }
+  }
 
-    private fun updatePreferenceStates() {
-        val action = Settings.System.getString(requireContext().contentResolver, "power_button_action_double_press")
-        doublePressActionCustomAppPref.isEnabled = action == "custom_app"
+  private fun handleShortcutChange(newValue: String) {
+    doublePressActionCustomAppPref.isEnabled = newValue == "custom_app"
+    if (newValue != "custom_app") {
+      clearCustomAppPreference()
+    }
+  }
+
+  private fun updatePreferenceStates() {
+    val action =
+      Settings.System.getString(
+        requireContext().contentResolver,
+        "power_button_action_double_press",
+      )
+    doublePressActionCustomAppPref.isEnabled = action == "custom_app"
+    updateCustomAppSummaries()
+  }
+
+  private fun showPackagePickerDialog() {
+    val dialog =
+      PackagePickerDialogFragment(R.string.pick_package_power_double_press) { selectedPackage ->
+        Settings.System.putString(
+          requireContext().contentResolver,
+          "power_button_action_double_press_custom_app_pkg",
+          selectedPackage,
+        )
         updateCustomAppSummaries()
-    }
+      }
+    dialog.show(childFragmentManager, "PackagePickerDialog")
+  }
 
-    private fun showPackagePickerDialog() {
-        val dialog = PackagePickerDialogFragment(R.string.pick_package_power_double_press) { selectedPackage ->
-            Settings.System.putString(requireContext().contentResolver, "power_button_action_double_press_custom_app_pkg", selectedPackage)
-            updateCustomAppSummaries()
+  private fun updateCustomAppSummaries() {
+    val packageManager = requireContext().packageManager
+    val customAppPkg =
+      Settings.System.getString(
+        requireContext().contentResolver,
+        "power_button_action_double_press_custom_app_pkg",
+      )
+    if (!customAppPkg.isNullOrEmpty()) {
+      val appLabel =
+        try {
+          packageManager.getApplicationLabel(packageManager.getApplicationInfo(customAppPkg, 0))
+        } catch (e: Exception) {
+          null
         }
-        dialog.show(childFragmentManager, "PackagePickerDialog")
+      doublePressActionCustomAppPref.summary = appLabel?.toString() ?: customAppPkg
+    } else {
+      doublePressActionCustomAppPref.summary =
+        getString(R.string.power_double_press_custom_app_select)
     }
+  }
 
-    private fun updateCustomAppSummaries() {
-        val packageManager = requireContext().packageManager
-        val customAppPkg = Settings.System.getString(requireContext().contentResolver, "power_button_action_double_press_custom_app_pkg")
-        if (!customAppPkg.isNullOrEmpty()) {
-            val appLabel = try {
-                packageManager.getApplicationLabel(packageManager.getApplicationInfo(customAppPkg, 0))
-            } catch (e: Exception) {
-                null
-            }
-            doublePressActionCustomAppPref.summary = appLabel?.toString() ?: customAppPkg
-        } else {
-            doublePressActionCustomAppPref.summary = getString(R.string.power_double_press_custom_app_select)
-        }
-    }
-
-    private fun clearCustomAppPreference() {
-        Settings.System.putString(requireContext().contentResolver, "power_button_action_double_press_custom_app_pkg", null)
-        updateCustomAppSummaries()
-    }
+  private fun clearCustomAppPreference() {
+    Settings.System.putString(
+      requireContext().contentResolver,
+      "power_button_action_double_press_custom_app_pkg",
+      null,
+    )
+    updateCustomAppSummaries()
+  }
 }
