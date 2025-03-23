@@ -18,12 +18,10 @@ package com.custom.settings.fragments;
 
 import android.content.Context;
 import android.content.pm.UserInfo;
-import android.provider.Settings;
 import android.os.UserManager;
 
-import com.android.settings.core.BasePreferenceController;
-
 import com.android.internal.util.axion.HideDeveloperStatusUtils;
+import com.android.settings.core.BasePreferenceController;
 
 import java.util.List;
 

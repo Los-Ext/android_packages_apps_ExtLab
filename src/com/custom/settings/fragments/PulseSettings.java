@@ -15,7 +15,6 @@
  */
 package com.custom.settings.fragments;
 
-import android.content.Context;
 import android.content.ContentResolver;
 import android.os.Bundle;
 import android.os.UserHandle;
@@ -24,13 +23,11 @@ import android.provider.Settings;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
-import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-
 import com.android.settings.preferences.colorpicker.ColorPickerPreference;
 
 public class PulseSettings extends SettingsPreferenceFragment implements

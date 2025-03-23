@@ -15,18 +15,8 @@
  */
 package com.custom.settings.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemProperties;
-import android.util.Log;
-import android.provider.Settings;
-
-import androidx.preference.Preference;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;

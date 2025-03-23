@@ -18,7 +18,6 @@ package com.custom.settings;
 
 import android.content.Context;
 
-import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
 public class TopLevelSettingsPreferenceController extends BasePreferenceController {

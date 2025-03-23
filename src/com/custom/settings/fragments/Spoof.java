@@ -26,7 +26,6 @@ import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import android.provider.Settings;
 
 import androidx.preference.Preference;
 
@@ -37,7 +36,6 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,15 +43,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @SearchIndexable
 public class Spoof extends SettingsPreferenceFragment implements Preference.OnPreferenceChangeListener {
