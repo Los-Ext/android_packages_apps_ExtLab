@@ -18,6 +18,7 @@ package com.custom.settings.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.settings.SettingsEnums;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -105,13 +106,13 @@ public class SensorBlock extends SettingsPreferenceFragment
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.VIEW_UNKNOWN;
+        return SettingsEnums.DEFAULT_APP_PICKER_CONFIRMATION_DIALOG;
     }
 
     @Override
     public int getDialogMetricsCategory(int dialogId) {
         if (dialogId == DIALOG_BLOCKED_APPS) {
-            return MetricsProto.MetricsEvent.VIEW_UNKNOWN;
+            return SettingsEnums.DEFAULT_APP_PICKER_CONFIRMATION_DIALOG;
         }
         return 0;
     }
