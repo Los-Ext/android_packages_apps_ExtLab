@@ -17,6 +17,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/custom_settings_title" >
 
+    <Preference
+        app:key="buttons"
+        app:icon="@drawable/ic_settings_buttons"
+        app:title="@string/buttons_settings_title"
+        app:summary="@string/buttons_settings_summary"
+        >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="org.lineageos.lineageparts"
+            android:targetClass="org.lineageos.lineageparts.input.ButtonSettings" />
+    </Preference>
+
     <!-- Gaming mode -->
     <Preference
         android:key="gaming_mode"
