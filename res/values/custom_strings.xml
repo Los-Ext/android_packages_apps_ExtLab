@@ -2120,8 +2120,8 @@
     <string name="volume_style_title">Volume panel styles</string>
 
     <!-- IME button space -->
-    <string name="navigation_bar_hide_ime_space_title">Hide IME button space</string>
-    <string name="navigation_bar_hide_ime_space_summary">Hide IME button space below keyboard</string>
+    <string name="show_ime_space_title">Show IME button space</string>
+    <string name="show_ime_space_summary">Enable the input method quick switch feature to switch input methods or hide the on-screen keyboard from the feature bar at the bottom of the screen when typing</string>
 
     <!-- Status bar padding -->
     <string name="statusbar_padding">Status bar padding</string>
