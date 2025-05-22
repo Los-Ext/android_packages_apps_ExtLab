@@ -75,7 +75,8 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
         "TYPE",
         "TAGS",
         "RELEASE",
-        "DEBUG"
+        "DEBUG",
+        "SDK_INT"
     };
 
     @Override
@@ -147,7 +148,8 @@ public class Spoof extends SettingsPreferenceFragment implements Preference.OnPr
                 "persist.sys.pihooks_TYPE",
                 "persist.sys.pihooks_TAGS",
                 "persist.sys.pihooks_RELEASE",
-                "persist.sys.pihooks_DEBUG"
+                "persist.sys.pihooks_DEBUG",
+                "persist.sys.pihooks_SDK_INT"
             };
             for (String key : keys) {
                 String value = SystemProperties.get(key, null);
