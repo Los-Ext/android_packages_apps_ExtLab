@@ -43,7 +43,7 @@
     <string name="battery_health_summary">Limit charging to 80% to extend battery lifespan</string>
 
     <!-- Special Features Dashboard -->
-    <string name="custom_settings_title">Special Features</string>
+    <string name="custom_settings_title">ExtLab</string>
     <string name="custom_settings_summary">Change icons, themes, and more</string>
 
     <!-- Double power button press -->
