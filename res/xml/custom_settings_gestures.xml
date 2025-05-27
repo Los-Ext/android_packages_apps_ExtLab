@@ -28,14 +28,6 @@
         android:fragment="com.custom.settings.fragments.DoubleTapPowerFragment"
         app:position="top" />
 
-    <!-- Pocket Mode -->
-    <com.android.settings.preferences.SecureSettingSwitchPreference
-        android:key="pocket_mode_enabled"
-        android:title="@string/pocket_judge_title"
-        android:summary="@string/pocket_judge_summary"
-        android:defaultValue="false"
-        />
-
     <com.android.settings.preferences.SystemSettingListPreference
         android:key="key_three_fingers_swipe_action"
         android:title="@string/three_finger_gesture_action_title"
