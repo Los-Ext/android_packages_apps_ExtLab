@@ -64,6 +64,13 @@
         android:fragment="com.custom.settings.fragments.MonetSettings" />
 
     <Preference
+        android:key="qs"
+        android:icon="@drawable/ic_settings_quicksettings"
+        android:title="@string/qs_settings_title"
+        android:summary="@string/qs_settings_summary"
+        android:fragment="com.custom.settings.fragments.QS" />
+
+    <Preference
         android:key="spoofing"
         android:icon="@drawable/ic_cog"
         android:title="@string/spoofing_title"
