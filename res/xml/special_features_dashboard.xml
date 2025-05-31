@@ -21,7 +21,6 @@
         app:key="buttons"
         app:icon="@drawable/ic_settings_buttons"
         app:title="@string/buttons_settings_title"
-        app:summary="@string/buttons_settings_summary"
         >
         <intent
             android:action="android.intent.action.MAIN"
@@ -34,7 +33,6 @@
         android:key="gaming_mode"
         android:icon="@drawable/ic_settings_game_mode"
         android:title="@string/gaming_mode_title"
-        android:summary="@string/gaming_mode_summary"
          >
         <intent
             android:action="android.intent.action.MAIN"
@@ -46,42 +44,36 @@
         android:key="gestures"
         android:icon="@drawable/ic_settings_gestures"
         android:title="@string/gestures_title"
-        android:summary="@string/gestures_title_summary"
         android:fragment="com.custom.settings.fragments.Gestures" />
 
     <Preference
         android:key="misc"
         android:icon="@drawable/ic_settings_miscs"
         android:title="@string/misc_title"
-        android:summary="@string/misc_settings_summary"
         android:fragment="com.custom.settings.fragments.Misc" />
 
     <Preference
         android:key="colors"
         android:icon="@drawable/ic_color_bucket"
         android:title="@string/monet_title"
-        android:summary="@string/monet_summary"
         android:fragment="com.custom.settings.fragments.MonetSettings" />
 
     <Preference
         android:key="qs"
         android:icon="@drawable/ic_settings_quicksettings"
         android:title="@string/qs_settings_title"
-        android:summary="@string/qs_settings_summary"
         android:fragment="com.custom.settings.fragments.QS" />
 
     <Preference
         android:key="spoofing"
         android:icon="@drawable/ic_cog"
         android:title="@string/spoofing_title"
-        android:summary="@string/spoofing_title_summary"
         android:fragment="com.custom.settings.fragments.Spoof" />
 
     <Preference
         app:key="status_bar"
         app:icon="@drawable/ic_settings_statusbar"
         app:title="@string/sb_settings_title"
-        app:summary="@string/sb_settings_summary"
 	>
         <intent
             android:action="android.intent.action.MAIN"
@@ -92,7 +84,6 @@
     <Preference
         android:key="system"
         android:icon="@drawable/ic_custom_settings_system_dashboard_white"
-        android:summary="@string/system_settings_summary"
         android:title="@string/header_category_system"
         android:fragment="com.custom.settings.fragments.System" />
 
