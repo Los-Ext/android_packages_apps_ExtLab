@@ -81,11 +81,4 @@
             android:targetClass="org.lineageos.lineageparts.statusbar.StatusBarSettings" />
     </Preference>
 
-    <Preference
-        android:key="system"
-        android:icon="@drawable/ic_custom_settings_system_dashboard_white"
-        android:title="@string/header_category_system"
-        android:fragment="com.custom.settings.fragments.System" />
-
-
 </PreferenceScreen> 
