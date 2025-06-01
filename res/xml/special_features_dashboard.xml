@@ -43,6 +43,13 @@
     </Preference>
 
     <Preference
+        android:key="gestures"
+        android:icon="@drawable/ic_settings_gestures"
+        android:title="@string/gestures_title"
+        android:summary="@string/gestures_title_summary"
+        android:fragment="com.custom.settings.fragments.Gestures" />
+
+    <Preference
         android:key="misc"
         android:icon="@drawable/ic_settings_miscs"
         android:title="@string/misc_title"
