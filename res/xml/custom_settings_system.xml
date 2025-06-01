@@ -20,11 +20,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/header_category_system">
 
-    <Preference
-         android:key="sensor_block_settings"
-         android:icon="@drawable/ic_remote"
-         android:title="@string/sensor_block_title"
-         android:summary="@string/sensor_block_summary"
-         android:fragment="com.custom.settings.fragments.SensorBlock"/>
-
 </PreferenceScreen>
