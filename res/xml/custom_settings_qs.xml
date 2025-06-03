@@ -43,7 +43,7 @@
         android:min="1" />
 
     <PreferenceCategory
-        android:key="qs_brighness_category"
+        android:key="quick_settings_brighness_category"
         android:title="@string/qs_brightness_slider_category">
 
         <!-- Brightness slider -->
@@ -66,39 +66,6 @@
             android:title="@string/qs_show_auto_brightness_title"
             android:summary="@string/qs_show_auto_brightness_summary"
             android:defaultValue="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="qs_layout_category"
-        android:title="@string/qs_layout_category_title">
-
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="qs_tile_label_hide"
-            android:title="@string/qs_tile_label_hide_title"
-            android:summary="@string/qs_tile_label_hide_summary"
-            android:defaultValue="false" />
-
-        <com.android.settings.preferences.SystemSettingSeekBarPreference
-            android:key="qs_tile_label_size"
-            android:title="@string/qs_tile_label_size_title"
-            android:max="15"
-            settings:min="10"
-            settings:interval="1"
-            settings:units="sp"
-            android:defaultValue="14" />
-
-        <com.android.settings.preferences.SystemSettingSwitchPreference
-            android:key="qs_tile_vertical_layout"
-            android:title="@string/qs_tile_layout_title"
-            android:summary="@string/qs_tile_layout_summary"
-            android:defaultValue="false" />
-
-        <Preference
-            android:key="qs_layout_columns_rows"
-            android:title="@string/qs_layout_columns_rows_title"
-            android:summary="@string/qs_layout_columns_rows_summary"
-            android:fragment="com.custom.settings.fragments.LayoutSettings" />
 
     </PreferenceCategory>
 
