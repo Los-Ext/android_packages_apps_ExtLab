@@ -64,6 +64,13 @@
         android:fragment="com.custom.settings.fragments.MonetSettings" />
 
     <Preference
+        android:key="spoofing"
+        android:icon="@drawable/ic_cog"
+        android:title="@string/spoofing_title"
+        android:summary="@string/spoofing_title_summary"
+        android:fragment="com.custom.settings.fragments.Spoof" />
+
+    <Preference
         app:key="status_bar"
         app:icon="@drawable/ic_settings_statusbar"
         app:title="@string/sb_settings_title"
