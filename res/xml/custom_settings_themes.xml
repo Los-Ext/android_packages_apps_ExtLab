@@ -28,13 +28,13 @@
             android:key="android.theme.customization.fonts"
             android:title="@string/themes_system_font_title"
             android:summary="@string/themes_system_font_summary"
-            android:fragment="com.custom.settings.fragments.themes.Fonts"/>
+            android:fragment="com.custom.settings.fragments.Fonts"/>
 
         <Preference
             android:key="android.theme.customization.lockscreen_clock_font"
             android:title="@string/themes_lock_screen_clock_font_title"
             android:summary="@string/themes_lock_screen_clock_font_summary"
-            android:fragment="com.custom.settings.fragments.themes.LockScreenClockFonts"/>
+            android:fragment="com.custom.settings.fragments.LockScreenClockFonts"/>
 
     </PreferenceCategory>
 
@@ -46,25 +46,25 @@
             android:key="android.theme.customization.icon_pack"
             android:title="@string/themes_system_icons_title"
             android:summary="@string/themes_system_icons_summary"
-            android:fragment="com.custom.settings.fragments.themes.SystemIcons"/>
+            android:fragment="com.custom.settings.fragments.SystemIcons"/>
 
         <Preference
             android:key="android.theme.customization.adaptive_icon_shape"
             android:title="@string/themes_icon_shape_title"
             android:summary="@string/themes_icon_shape_summary"
-            android:fragment="com.custom.settings.fragments.themes.IconShapes"/>
+            android:fragment="com.custom.settings.fragments.IconShapes"/>
 
         <Preference
             android:key="android.theme.customization.signal_icon"
             android:title="@string/themes_signal_icon_title"
             android:summary="@string/themes_signal_icon_summary"
-            android:fragment="com.custom.settings.fragments.themes.SignalIcons"/>
+            android:fragment="com.custom.settings.fragments.SignalIcons"/>
 
         <Preference
             android:key="android.theme.customization.wifi_icon"
             android:title="@string/themes_wifi_icon_title"
             android:summary="@string/themes_wifi_icon_summary"
-            android:fragment="com.custom.settings.fragments.themes.WifiIcons"/>
+            android:fragment="com.custom.settings.fragments.WifiIcons"/>
 
     </PreferenceCategory>
 

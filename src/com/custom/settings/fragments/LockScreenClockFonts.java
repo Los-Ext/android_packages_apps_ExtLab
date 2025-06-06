@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.custom.settings.fragments.themes;
+package com.custom.settings.fragments;
 
 import static android.os.UserHandle.USER_SYSTEM;
 

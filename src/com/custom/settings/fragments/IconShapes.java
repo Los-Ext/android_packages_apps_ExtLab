@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.custom.settings.fragments.themes;
+package com.custom.settings.fragments;
+
+import static com.android.internal.util.crdroid.ThemeUtils.ICON_SHAPE_KEY;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,41 +33,33 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settingslib.Utils;
 import com.android.internal.util.crdroid.ThemeUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class SystemIcons extends SettingsPreferenceFragment {
+public class IconShapes extends SettingsPreferenceFragment {
 
-    private static final String TAG = "StatusbarIcons";
+    private static final String TAG = "IconShapes";
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private final String mCategory = "android.theme.customization.icon_pack.android";
+    private final String mCategory = ICON_SHAPE_KEY;
     private List<String> mPkgs;
-
-    private final Map<String, String> overlayMap = new HashMap<>();
-    {
-        overlayMap.put("com.android.settings", "android.theme.customization.icon_pack.settings");
-        overlayMap.put("com.android.systemui", "android.theme.customization.icon_pack.systemui");
-        overlayMap.put("com.android.launcher3", "android.theme.customization.icon_pack.launcher");
-        overlayMap.put("com.android.wallpaper", "android.theme.customization.icon_pack.themepicker");
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!isAdded()) return;
-        requireActivity().setTitle(R.string.theme_customization_icon_pack_title);
+        requireActivity().setTitle(R.string.theme_customization_icon_shape_title);
         mThemeUtils = new ThemeUtils(requireContext());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
     }
@@ -75,7 +70,7 @@ public class SystemIcons extends SettingsPreferenceFragment {
         View view = inflater.inflate(R.layout.item_view, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
-        mRecyclerView.setAdapter(new Adapter(requireContext(), mPkgs, mThemeUtils, mCategory, overlayMap, mRecyclerView));
+        mRecyclerView.setAdapter(new Adapter(requireContext(), mPkgs, mThemeUtils, mCategory, mRecyclerView));
         return view;
     }
 
@@ -98,18 +93,15 @@ public class SystemIcons extends SettingsPreferenceFragment {
         private final List<String> mPkgs;
         private final ThemeUtils mThemeUtils;
         private final String mCategory;
-        private final Map<String, String> overlayMap;
         private final RecyclerView mRecyclerView;
         private final String mAppliedPkg;
         private String mSelectedPkg;
 
-        public Adapter(Context context, List<String> pkgs, ThemeUtils themeUtils, String category,
-                       Map<String, String> overlayMap, RecyclerView recyclerView) {
+        public Adapter(Context context, List<String> pkgs, ThemeUtils themeUtils, String category, RecyclerView recyclerView) {
             this.contextRef = new WeakReference<>(context);
             this.mPkgs = pkgs;
             this.mThemeUtils = themeUtils;
             this.mCategory = category;
-            this.overlayMap = overlayMap;
             this.mRecyclerView = recyclerView;
 
             mAppliedPkg = mThemeUtils.getOverlayInfos(mCategory).stream()
@@ -117,13 +109,14 @@ public class SystemIcons extends SettingsPreferenceFragment {
                     .map(info -> info.packageName)
                     .findFirst()
                     .orElse("android");
+
             mSelectedPkg = mAppliedPkg;
         }
 
         @NonNull
         @Override
         public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_option, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_option, parent, false);
             return new CustomViewHolder(view);
         }
 
@@ -133,42 +126,29 @@ public class SystemIcons extends SettingsPreferenceFragment {
             if (context == null) return;
 
             String pkg = mPkgs.get(position);
-            holder.image1.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_4"));
-            holder.image2.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_4_4_bar"));
-            holder.image3.setBackgroundDrawable(getDrawable(context, pkg, "ic_qs_airplane"));
-            holder.image4.setBackgroundDrawable(getDrawable(context, pkg, "ic_qs_flashlight"));
+            Drawable drawable = mThemeUtils.createShapeDrawable(pkg);
+            if (drawable != null) {
+                holder.image.setBackground(drawable);
+            }
 
             String label = getLabel(context, pkg);
             holder.name.setText("android".equals(pkg) ? "Default" : label);
-            holder.itemView.setActivated(pkg.equals(mSelectedPkg));
 
+            boolean isDefault = "android".equals(mAppliedPkg) && "android".equals(pkg);
+            int color = ColorUtils.setAlphaComponent(
+                    Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent),
+                    pkg.equals(mAppliedPkg) || isDefault ? 170 : 75);
+            holder.image.setBackgroundTintList(ColorStateList.valueOf(color));
+
+            holder.itemView.findViewById(R.id.option_tile).setBackground(null);
+            holder.itemView.setActivated(pkg.equals(mSelectedPkg));
             holder.itemView.setOnClickListener(view -> {
                 if (!pkg.equals(mSelectedPkg)) {
-                    String oldPkg = mSelectedPkg;
                     mSelectedPkg = pkg;
-                    applyOverlays(pkg);
-                    updateActivatedStatus(oldPkg);
-                    updateActivatedStatus(mSelectedPkg);
+                    mThemeUtils.setOverlayEnabled(mCategory, pkg, "android");
                 }
+                updateActivatedStatus();
             });
-        }
-
-        private void applyOverlays(String selectedPkg) {
-            mThemeUtils.setOverlayEnabled(mCategory, selectedPkg, "android");
-            String pattern = "android".equals(selectedPkg) ? "" : selectedPkg.split("\\.")[4];
-            for (Map.Entry<String, String> entry : overlayMap.entrySet()) {
-                String target = entry.getKey();
-                String category = entry.getValue();
-                if (pattern.isEmpty()) {
-                    mThemeUtils.setOverlayEnabled(category, "android", "android");
-                } else {
-                    for (String pkg : mThemeUtils.getOverlayPackagesForCategory(category, target)) {
-                        if (pkg.contains(pattern)) {
-                            mThemeUtils.setOverlayEnabled(category, pkg, target);
-                        }
-                    }
-                }
-            }
         }
 
         @Override
@@ -176,39 +156,18 @@ public class SystemIcons extends SettingsPreferenceFragment {
             return mPkgs.size();
         }
 
-        private void updateActivatedStatus(String pkg) {
-            int index = mPkgs.indexOf(pkg);
-            if (index >= 0) {
-                notifyItemChanged(index);
-            }
+        private void updateActivatedStatus() {
+            notifyDataSetChanged();
         }
 
         public static class CustomViewHolder extends RecyclerView.ViewHolder {
             TextView name;
-            ImageView image1, image2, image3, image4;
-
+            ImageView image;
             public CustomViewHolder(View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.option_label);
-                image1 = itemView.findViewById(R.id.image1);
-                image2 = itemView.findViewById(R.id.image2);
-                image3 = itemView.findViewById(R.id.image3);
-                image4 = itemView.findViewById(R.id.image4);
+                image = itemView.findViewById(R.id.option_thumbnail);
             }
-        }
-
-        private Drawable getDrawable(Context context, String pkg, String drawableName) {
-            try {
-                PackageManager pm = context.getPackageManager();
-                Resources res = pkg.equals("android") ? Resources.getSystem() : pm.getResourcesForApplication(pkg);
-                int resId = res.getIdentifier(drawableName, "drawable", pkg);
-                if (resId != 0) {
-                    return res.getDrawable(resId, context.getTheme());
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.e(TAG, "Drawable load failed for pkg: " + pkg + ", name: " + drawableName, e);
-            }
-            return null;
         }
 
         private String getLabel(Context context, String pkg) {

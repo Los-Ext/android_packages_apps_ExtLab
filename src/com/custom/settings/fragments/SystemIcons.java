@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.custom.settings.fragments.themes;
+package com.custom.settings.fragments;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -39,22 +39,32 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.util.crdroid.ThemeUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class WifiIcons extends SettingsPreferenceFragment {
+public class SystemIcons extends SettingsPreferenceFragment {
 
-    private static final String TAG = "WifiIcons";
+    private static final String TAG = "StatusbarIcons";
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private final String mCategory = "android.theme.customization.wifi_icon";
+    private final String mCategory = "android.theme.customization.icon_pack.android";
     private List<String> mPkgs;
+
+    private final Map<String, String> overlayMap = new HashMap<>();
+    {
+        overlayMap.put("com.android.settings", "android.theme.customization.icon_pack.settings");
+        overlayMap.put("com.android.systemui", "android.theme.customization.icon_pack.systemui");
+        overlayMap.put("com.android.launcher3", "android.theme.customization.icon_pack.launcher");
+        overlayMap.put("com.android.wallpaper", "android.theme.customization.icon_pack.themepicker");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!isAdded()) return;
-        requireActivity().setTitle(R.string.theme_customization_wifi_icon_title);
+        requireActivity().setTitle(R.string.theme_customization_icon_pack_title);
         mThemeUtils = new ThemeUtils(requireContext());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
     }
@@ -65,7 +75,7 @@ public class WifiIcons extends SettingsPreferenceFragment {
         View view = inflater.inflate(R.layout.item_view, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
-        mRecyclerView.setAdapter(new Adapter(requireContext(), mPkgs, mThemeUtils, mCategory, mRecyclerView));
+        mRecyclerView.setAdapter(new Adapter(requireContext(), mPkgs, mThemeUtils, mCategory, overlayMap, mRecyclerView));
         return view;
     }
 
@@ -88,15 +98,18 @@ public class WifiIcons extends SettingsPreferenceFragment {
         private final List<String> mPkgs;
         private final ThemeUtils mThemeUtils;
         private final String mCategory;
+        private final Map<String, String> overlayMap;
         private final RecyclerView mRecyclerView;
         private final String mAppliedPkg;
         private String mSelectedPkg;
 
-        public Adapter(Context context, List<String> pkgs, ThemeUtils themeUtils, String category, RecyclerView recyclerView) {
+        public Adapter(Context context, List<String> pkgs, ThemeUtils themeUtils, String category,
+                       Map<String, String> overlayMap, RecyclerView recyclerView) {
             this.contextRef = new WeakReference<>(context);
             this.mPkgs = pkgs;
             this.mThemeUtils = themeUtils;
             this.mCategory = category;
+            this.overlayMap = overlayMap;
             this.mRecyclerView = recyclerView;
 
             mAppliedPkg = mThemeUtils.getOverlayInfos(mCategory).stream()
@@ -120,11 +133,10 @@ public class WifiIcons extends SettingsPreferenceFragment {
             if (context == null) return;
 
             String pkg = mPkgs.get(position);
-
-            holder.image1.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_0"));
-            holder.image2.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_2"));
-            holder.image3.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_3"));
-            holder.image4.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_4"));
+            holder.image1.setBackgroundDrawable(getDrawable(context, pkg, "ic_wifi_signal_4"));
+            holder.image2.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_4_4_bar"));
+            holder.image3.setBackgroundDrawable(getDrawable(context, pkg, "ic_qs_airplane"));
+            holder.image4.setBackgroundDrawable(getDrawable(context, pkg, "ic_qs_flashlight"));
 
             String label = getLabel(context, pkg);
             holder.name.setText("android".equals(pkg) ? "Default" : label);
@@ -134,11 +146,29 @@ public class WifiIcons extends SettingsPreferenceFragment {
                 if (!pkg.equals(mSelectedPkg)) {
                     String oldPkg = mSelectedPkg;
                     mSelectedPkg = pkg;
-                    mThemeUtils.setOverlayEnabled(mCategory, pkg, "android");
+                    applyOverlays(pkg);
                     updateActivatedStatus(oldPkg);
                     updateActivatedStatus(mSelectedPkg);
                 }
             });
+        }
+
+        private void applyOverlays(String selectedPkg) {
+            mThemeUtils.setOverlayEnabled(mCategory, selectedPkg, "android");
+            String pattern = "android".equals(selectedPkg) ? "" : selectedPkg.split("\\.")[4];
+            for (Map.Entry<String, String> entry : overlayMap.entrySet()) {
+                String target = entry.getKey();
+                String category = entry.getValue();
+                if (pattern.isEmpty()) {
+                    mThemeUtils.setOverlayEnabled(category, "android", "android");
+                } else {
+                    for (String pkg : mThemeUtils.getOverlayPackagesForCategory(category, target)) {
+                        if (pkg.contains(pattern)) {
+                            mThemeUtils.setOverlayEnabled(category, pkg, target);
+                        }
+                    }
+                }
+            }
         }
 
         @Override

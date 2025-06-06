@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package com.custom.settings.fragments.themes;
+package com.custom.settings.fragments;
+
+import static com.android.internal.util.crdroid.ThemeUtils.FONT_KEY;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,20 +42,20 @@ import com.android.internal.util.crdroid.ThemeUtils;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class SignalIcons extends SettingsPreferenceFragment {
+public class Fonts extends SettingsPreferenceFragment {
 
-    private static final String TAG = "SignalIcons";
+    private static final String TAG = "FontsPicker";
 
     private RecyclerView mRecyclerView;
     private ThemeUtils mThemeUtils;
-    private final String mCategory = "android.theme.customization.signal_icon";
+    private final String mCategory = FONT_KEY;
     private List<String> mPkgs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!isAdded()) return;
-        requireActivity().setTitle(R.string.theme_customization_signal_icon_title);
+        requireActivity().setTitle(R.string.theme_customization_font_title);
         mThemeUtils = new ThemeUtils(requireContext());
         mPkgs = mThemeUtils.getOverlayPackagesForCategory(mCategory, "android");
     }
@@ -64,7 +65,7 @@ public class SignalIcons extends SettingsPreferenceFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.item_view, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         mRecyclerView.setAdapter(new Adapter(requireContext(), mPkgs, mThemeUtils, mCategory, mRecyclerView));
         return view;
     }
@@ -104,13 +105,14 @@ public class SignalIcons extends SettingsPreferenceFragment {
                     .map(info -> info.packageName)
                     .findFirst()
                     .orElse("android");
+
             mSelectedPkg = mAppliedPkg;
         }
 
         @NonNull
         @Override
         public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_option, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fonts_option, parent, false);
             return new CustomViewHolder(view);
         }
 
@@ -120,13 +122,15 @@ public class SignalIcons extends SettingsPreferenceFragment {
             if (context == null) return;
 
             String pkg = mPkgs.get(position);
-            holder.image1.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_0_5_bar"));
-            holder.image2.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_1_5_bar"));
-            holder.image3.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_3_5_bar"));
-            holder.image4.setBackgroundDrawable(getDrawable(context, pkg, "ic_signal_cellular_5_5_bar"));
-
             String label = getLabel(context, pkg);
-            holder.name.setText("android".equals(pkg) ? "Default" : label);
+            Typeface typeface = getTypeface(context, pkg);
+
+            holder.title.setText("android".equals(pkg) ? "Default" : label);
+            holder.title.setTextSize(20);
+            if (typeface != null) {
+                holder.title.setTypeface(typeface);
+            }
+            holder.name.setVisibility(View.GONE);
             holder.itemView.setActivated(pkg.equals(mSelectedPkg));
 
             holder.itemView.setOnClickListener(view -> {
@@ -154,28 +158,25 @@ public class SignalIcons extends SettingsPreferenceFragment {
 
         public static class CustomViewHolder extends RecyclerView.ViewHolder {
             TextView name;
-            ImageView image1, image2, image3, image4;
-
+            TextView title;
             public CustomViewHolder(View itemView) {
                 super(itemView);
+                title = itemView.findViewById(R.id.option_title);
                 name = itemView.findViewById(R.id.option_label);
-                image1 = itemView.findViewById(R.id.image1);
-                image2 = itemView.findViewById(R.id.image2);
-                image3 = itemView.findViewById(R.id.image3);
-                image4 = itemView.findViewById(R.id.image4);
             }
         }
 
-        private Drawable getDrawable(Context context, String pkg, String drawableName) {
+        private Typeface getTypeface(Context context, String pkg) {
             try {
                 PackageManager pm = context.getPackageManager();
-                Resources res = pkg.equals("android") ? Resources.getSystem() : pm.getResourcesForApplication(pkg);
-                int resId = res.getIdentifier(drawableName, "drawable", pkg);
-                if (resId != 0) {
-                    return res.getDrawable(resId, context.getTheme());
+                Resources res = pkg.equals("android") ? Resources.getSystem()
+                        : pm.getResourcesForApplication(pkg);
+                int id = res.getIdentifier("config_bodyFontFamily", "string", pkg);
+                if (id != 0) {
+                    return Typeface.create(res.getString(id), Typeface.NORMAL);
                 }
             } catch (PackageManager.NameNotFoundException e) {
-                Log.e(TAG, "Drawable load failed for pkg: " + pkg + ", name: " + drawableName, e);
+                Log.e(TAG, "Typeface load failed for pkg: " + pkg, e);
             }
             return null;
         }
