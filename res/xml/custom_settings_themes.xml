@@ -20,6 +20,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/ui_title">
 
+    <Preference
+        android:key="colors"
+        android:title="@string/monet_title"
+        android:summary="@string/monet_summary"
+        android:fragment="com.custom.settings.fragments.MonetSettings" />
+
     <PreferenceCategory
         android:key="themes_fonts_category"
         android:title="@string/themes_fonts_category">

@@ -53,12 +53,6 @@
         android:fragment="com.custom.settings.fragments.Misc" />
 
     <Preference
-        android:key="colors"
-        android:icon="@drawable/ic_color_bucket"
-        android:title="@string/monet_title"
-        android:fragment="com.custom.settings.fragments.MonetSettings" />
-
-    <Preference
         android:key="qs"
         android:icon="@drawable/ic_settings_quicksettings"
         android:title="@string/qs_settings_title"
