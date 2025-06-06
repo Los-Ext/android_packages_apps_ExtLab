@@ -81,4 +81,11 @@
             android:targetClass="org.lineageos.lineageparts.statusbar.StatusBarSettings" />
     </Preference>
 
+    <Preference
+        android:key="themes"
+        android:icon="@drawable/ic_settings_ui"
+        android:title="@string/ui_settings_title"
+        android:summary="@string/ui_settings_summary"
+        android:fragment="com.custom.settings.fragments.themes" />
+
 </PreferenceScreen> 
